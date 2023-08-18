@@ -1,0 +1,291 @@
+<html>
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+        }
+
+        .header a:hover {
+            background-color: #ccc;
+        }
+
+        .form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        .form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #66aaff;
+        }
+
+        .form-group input.invalid {
+            border-color: #ff0000;
+        }
+
+        .form-group span.error {
+            display: block;
+            color: #ff0000;
+            font-size: 14px;
+        }
+
+        .form-group input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+        }
+
+        .form-group label.terms {
+            display: inline-block;
+            font-weight: normal;
+        }
+
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #66aaff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #5599ff;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                background-color: #e6e6e6;
+                /* change the background colour of the page */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="form">
+            <h2>Registration Form</h2>
+            <form id="registration-form" onsubmit="return validateForm()">
+                <div class="form-group" id="name-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                    <span class="error" id="name-error"></span>
+                </div>
+                <div class="form-group" id="email-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email">
+                    <span class="error" id="email-error"></span>
+                </div>
+                <div class="form-group" id="mobile-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile" maxlength="10">
+                    <span class="error" id="mobile-error"></span>
+                </div>
+                <div class="form-group" id="username-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                    <span class="error" id="username-error"></span>
+                </div>
+                <div class="form-group" id="password-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                    <span class="error" id="password-error"></span>
+                </div>
+                <div class="form-group" id="confirm-password-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password">
+                    <span class="error" id="confirm-password-error"></span>
+                </div>
+                <div class="form-group" id="terms-group">
+                    <input type="checkbox" id="terms" name="terms">
+                    <label for="terms" class="terms">I agree to the terms and conditions</label>
+                    <span class="error" id="terms-error"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            // get the form elements
+            var name = document.getElementById("name");
+            var email = document.getElementById("email");
+            var mobile = document.getElementById("mobile");
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            var confirm_password = document.getElementById("confirm-password");
+            var terms = document.getElementById("terms");
+
+            // get the error elements
+            var name_error = document.getElementById("name-error");
+            var email_error = document.getElementById("email-error");
+            var mobile_error = document.getElementById("mobile-error");
+            var username_error = document.getElementById("username-error");
+            var password_error = document.getElementById("password-error");
+            var confirm_password_error = document.getElementById("confirm-password-error");
+            var terms_error = document.getElementById("terms-error");
+
+            // initialize a flag variable to indicate the validity of the form
+            var valid = true;
+
+            // validate name
+            if (name.value == "") {
+                // name is empty
+                name_error.textContent = "Name is required";
+                name.classList.add("invalid");
+                valid = false;
+            } else {
+                // name is not empty
+                name_error.textContent = "";
+                name.classList.remove("invalid");
+            }
+
+            // validate email
+            if (email.value == "") {
+                // email is empty
+                email_error.textContent = "Email is required";
+                email.classList.add("invalid");
+                valid = false;
+            } else if (!email.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+                // email is not in a valid format
+                email_error.textContent = "Email is not valid";
+                email.classList.add("invalid");
+                valid = false;
+            } else {
+                // email is not empty and valid
+                email_error.textContent = "";
+                email.classList.remove("invalid");
+            }
+
+            // validate mobile
+            if (mobile.value == "") {
+                // mobile is empty
+                mobile_error.textContent = "Mobile is required";
+                mobile.classList.add("invalid");
+                valid = false;
+            } else if (!mobile.value.match(/^[0-9]{10}$/)) {
+                // mobile is not a 10-digit number
+                mobile_error.textContent = "Mobile should be a 10-digit number";
+                mobile.classList.add("invalid");
+                valid = false;
+            } else {
+                // mobile is not empty and valid
+                mobile_error.textContent = "";
+                mobile.classList.remove("invalid");
+            }
+
+            // validate username
+            if (username.value == "") {
+                // username is empty
+                username_error.textContent = "Username is required";
+                username.classList.add("invalid");
+                valid = false;
+            } else if (username.value.length < 5) {
+                // username is less than 5 characters
+                username_error.textContent = "Username should be at least 5 characters";
+                username.classList.add("invalid");
+                valid = false;
+            } else {
+                // username is not empty and valid
+                username_error.textContent = "";
+                username.classList.remove("invalid");
+            }
+
+            // validate password
+            if (password.value == "") {
+                // password is empty
+                password_error.textContent = "Password is required";
+                password.classList.add("invalid");
+                valid = false;
+            } else {
+                // password is not empty
+                password_error.textContent = "";
+                password.classList.remove("invalid");
+            }
+
+            // validate confirm password
+            if (confirm_password.value == "") {
+                // confirm password is empty
+                confirm_password_error.textContent = "Confirm Password is required";
+                confirm_password.classList.add("invalid");
+                valid = false;
+            } else if (confirm_password.value != password.value) {
+                // confirm password does not match password
+                confirm_password_error.textContent = "Passwords do not match";
+                confirm_password.classList.add("invalid");
+                valid = false;
+            } else {
+                // confirm password is not empty and matches password
+                confirm_password_error.textContent = "";
+                confirm_password.classList.remove("invalid");
+            }
+
+            // validate terms and conditions
+            if (!terms.checked) {
+                // terms and conditions are not checked
+                terms_error.textContent = "You must agree to the terms and conditions";
+                terms.classList.add("invalid");
+                valid = false;
+            } else {
+                // terms and conditions are checked
+                terms_error.textContent = "";
+                terms.classList.remove("invalid");
+            }
+
+            return valid; // return the validity
